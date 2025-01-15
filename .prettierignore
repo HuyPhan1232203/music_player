@@ -1,0 +1,5 @@
+node_module/
+ios/
+android/
+assets/
+.expo/
