@@ -3,16 +3,21 @@ import React from 'react'
 import library from '@/assets/data/library.json'
 import { TrackListItem } from './TrackListItem'
 import { utilsStyles } from '@/styles/default'
-export type TrackListProps = Partial<FlatListProps<unknown>>
+export type TrackListProps = Partial<FlatListProps<unknown>> & {
+  tracks: any[]
+}
 const ItemDivider = () => (
   <View
     style={{ ...utilsStyles.itemSeparator, marginVertical: 9, marginLeft: 60 }}
   />
 )
-const TrackList = ({ ...FlatListProps }: TrackListProps) => {
+const TrackList = ({ tracks, ...FlatListProps }: TrackListProps) => {
   return (
     <FlatList
-      data={library}
+      contentInsetAdjustmentBehavior='automatic'
+      data={tracks}
+      contentContainerStyle={{ paddingTop: 10, paddingBottom: 120 }}
+      ListFooterComponent={ItemDivider}
       ItemSeparatorComponent={ItemDivider}
       renderItem={({ item: track }) => (
         <TrackListItem
