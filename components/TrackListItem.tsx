@@ -3,22 +3,20 @@ import { colors, fontSize } from '@/constraints/tokens'
 import { defaultStyles } from '@/styles/default'
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { Track } from 'react-native-track-player'
 export type TrackListItemProp = {
-  track: {
-    title: string
-    image?: string
-    artist?: string
-  }
+  track: Track
 }
-const isActiveTrack = false
+
 export const TrackListItem = ({ track }: TrackListItemProp) => {
+  const isActiveTrack = false
   return (
     <TouchableHighlight>
       <View style={styles.trackItemContainer}>
         <View>
           <FastImage
             source={{
-              uri: track.image ?? unknowTrackImageUri,
+              uri: track.artwork ?? unknowTrackImageUri,
               priority: FastImage.priority.normal,
             }}
             style={{

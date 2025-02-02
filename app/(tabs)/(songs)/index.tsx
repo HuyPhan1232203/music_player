@@ -18,14 +18,11 @@ const SongsScreen = () => {
     )
   }, [search])
   return (
-    <ScrollView
-      contentInsetAdjustmentBehavior='automatic'
-      style={defaultStyles.container}
-    >
+    <View style={defaultStyles.container}>
       <View style={{ paddingHorizontal: screenPadding.horizontal }}>
         <TrackList tracks={filterSongs} scrollEnabled={false} />
       </View>
-    </ScrollView>
+    </View>
   )
 }
 export default SongsScreen
