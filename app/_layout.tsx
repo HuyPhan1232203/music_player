@@ -3,14 +3,22 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import useSetupTrackPlayer from '@/hooks/useSetupTrackPlayer'
 import { useCallback } from 'react'
-// SplashScreen.preventAutoHideAsync()
+SplashScreen.preventAutoHideAsync()
 const App = () => {
   // const handleTrackPlayerLoaded = useCallback(() => {
-  //   SplashScreen.hideAsync()
+  //   try {
+  //     SplashScreen.hideAsync()
+  //   } catch {
+  //     console.log('handleTrackPlayerLoaded error')
+  //   }
   // }, [])
-  // useSetupTrackPlayer({
-  //   onload: handleTrackPlayerLoaded,
-  // })
+  // try {
+  //   useSetupTrackPlayer({
+  //     onload: handleTrackPlayerLoaded,
+  //   })
+  // } catch {
+  //   console.log('object')
+  // }
   return (
     <SafeAreaProvider>
       <RootNavigation />
