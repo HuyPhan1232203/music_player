@@ -3,15 +3,25 @@ import { colors, fontSize } from '@/constraints/tokens'
 import { defaultStyles } from '@/styles/default'
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { Track } from 'react-native-track-player'
+import { Track, useActiveTrack } from 'react-native-track-player'
+import Entypo from '@expo/vector-icons/Entypo'
 export type TrackListItemProp = {
   track: Track
+  onTrackSelect: (track: Track) => void
 }
 
-export const TrackListItem = ({ track }: TrackListItemProp) => {
-  const isActiveTrack = false
+export const TrackListItem = ({
+  track,
+  onTrackSelect: handleTrackSelect,
+}: TrackListItemProp) => {
+  const isActiveTrack = useActiveTrack()?.url === track.url
+
   return (
-    <TouchableHighlight>
+    <TouchableHighlight
+      onPress={() => {
+        handleTrackSelect(track)
+      }}
+    >
       <View style={styles.trackItemContainer}>
         <View>
           <FastImage
@@ -26,7 +36,7 @@ export const TrackListItem = ({ track }: TrackListItemProp) => {
           />
         </View>
         {/* Track title + artist */}
-        <View style={{ width: '100%' }}>
+        <View style={{ width: '70%' }}>
           <Text
             numberOfLines={1}
             style={{
@@ -36,12 +46,11 @@ export const TrackListItem = ({ track }: TrackListItemProp) => {
           >
             {track.title}
           </Text>
-          {track.artist && (
-            <Text numberOfLines={1} style={styles.trackArtistText}>
-              {track.artist}
-            </Text>
-          )}
+          <Text numberOfLines={1} style={styles.trackArtistText}>
+            {track.artist ?? 'Unknow artist'}
+          </Text>
         </View>
+        <Entypo name='dots-three-horizontal' size={24} color={colors.icon} />
       </View>
     </TouchableHighlight>
   )

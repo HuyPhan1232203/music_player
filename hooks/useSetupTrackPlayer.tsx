@@ -1,28 +1,26 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import TrackPlayer, { RepeatMode } from 'react-native-track-player'
+
 const setupPlayer = async () => {
   await TrackPlayer.setupPlayer({
     maxCacheSize: 1024 * 10,
   })
-  await TrackPlayer.setVolume(0.03)
+  await TrackPlayer.setVolume(2)
   await TrackPlayer.setRepeatMode(RepeatMode.Queue)
 }
-const useSetupTrackPlayer = ({ onload }: { onload?: () => void }) => {
-  const init = useRef(false)
+
+const useSetupTrackPlayer = ({ onLoad }: { onLoad?: () => void }) => {
+  const isInitialized = useRef(false)
   useEffect(() => {
     setupPlayer()
       .then(() => {
-        init.current = true
-        onload?.()
+        isInitialized.current = true
+        onLoad?.()
       })
-      .catch(err => {
-        init.current = false
-        console.error(err)
+      .catch(error => {
+        isInitialized.current = false
+        console.error(error)
       })
-  }, [onload])
+  }, [onLoad])
 }
-
 export default useSetupTrackPlayer
-
-const styles = StyleSheet.create({})
