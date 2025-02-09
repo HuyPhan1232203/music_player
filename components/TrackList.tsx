@@ -21,8 +21,8 @@ const TrackList = ({ tracks, ...FlatListProps }: TrackListProps) => {
   return (
     <FlatList
       data={tracks}
-      contentInsetAdjustmentBehavior='automatic'
       contentContainerStyle={{ paddingTop: 10, paddingBottom: 120 }}
+      contentInsetAdjustmentBehavior='automatic'
       ListFooterComponent={ItemDivider}
       ItemSeparatorComponent={ItemDivider}
       ListEmptyComponent={

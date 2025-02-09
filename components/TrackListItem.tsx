@@ -3,8 +3,10 @@ import { colors, fontSize } from '@/constraints/tokens'
 import { defaultStyles } from '@/styles/default'
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { Track, useActiveTrack } from 'react-native-track-player'
+import { Track, useActiveTrack, useIsPlaying } from 'react-native-track-player'
 import Entypo from '@expo/vector-icons/Entypo'
+import LoaderKit from 'react-native-loader-kit'
+import Ionicons from '@expo/vector-icons/Ionicons'
 export type TrackListItemProp = {
   track: Track
   onTrackSelect: (track: Track) => void
@@ -14,6 +16,7 @@ export const TrackListItem = ({
   track,
   onTrackSelect: handleTrackSelect,
 }: TrackListItemProp) => {
+  const { playing } = useIsPlaying()
   const isActiveTrack = useActiveTrack()?.url === track.url
 
   return (
@@ -34,6 +37,21 @@ export const TrackListItem = ({
               opacity: isActiveTrack ? 0.6 : 1,
             }}
           />
+          {isActiveTrack &&
+            (playing ? (
+              <LoaderKit
+                name='LineScaleParty'
+                style={styles.trackPlayingIcon}
+                color={colors.text}
+              ></LoaderKit>
+            ) : (
+              <Ionicons
+                name='play'
+                size={24}
+                style={styles.trackPausedIcon}
+                color={colors.text}
+              />
+            ))}
         </View>
         {/* Track title + artist */}
         <View style={{ width: '70%' }}>
@@ -67,6 +85,13 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
+  trackPlayingIcon: {
+    position: 'absolute',
+    top: 17,
+    left: 16,
+    width: 16,
+    height: 16,
+  },
   trackTitleText: {
     ...defaultStyles.text,
     fontSize: fontSize.xm,
@@ -78,5 +103,10 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     fontSize: 14,
     marginTop: 4,
+  },
+  trackPausedIcon: {
+    position: 'absolute',
+    top: 14,
+    left: 14,
   },
 })

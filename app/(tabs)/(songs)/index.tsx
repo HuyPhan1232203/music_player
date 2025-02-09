@@ -20,7 +20,7 @@ const SongsScreen = () => {
   return (
     <View style={defaultStyles.container}>
       <View style={{ paddingHorizontal: screenPadding.horizontal }}>
-        <TrackList tracks={filterSongs} scrollEnabled={false} />
+        <TrackList tracks={filterSongs} scrollEnabled={true} />
       </View>
     </View>
   )

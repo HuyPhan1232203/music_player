@@ -11,24 +11,28 @@ import FastImage from 'react-native-fast-image'
 import { unknowArtistImageUri, unknowTrackImageUri } from '@/constraints/images'
 import { defaultStyles } from '@/styles/default'
 import { colors, fontSize } from '@/constraints/tokens'
-import FontAwesome from '@expo/vector-icons/FontAwesome'
-import Ionicons from '@expo/vector-icons/Ionicons'
 import {
   PlayPauseButton,
   SkipToNextButton,
   SkipToPreviusButton,
 } from './PlayerControl'
 import useLastActiveTrack from '@/hooks/useLastActiveTrack'
+import MovingText from './MovingText'
+import { useRouter } from 'expo-router'
 const OnPlayTrack = ({ style }: ViewProps) => {
+  const router = useRouter()
   const activeTrack = useActiveTrack()
   const lastActiveTrack = useLastActiveTrack()
-
+  const handlePress = () => {
+    router.navigate('/player')
+  }
   const displayedTrack: Track = activeTrack ?? lastActiveTrack
   if (!displayedTrack) {
     return null
   }
   return (
     <TouchableOpacity
+      onPress={handlePress}
       activeOpacity={0.9}
       style={[styles.trackItemContainer, style]}
     >
@@ -38,9 +42,13 @@ const OnPlayTrack = ({ style }: ViewProps) => {
           style={styles.trackArtworkImage}
         />
         <View style={styles.trackTitleContainer}>
-          <Text style={styles.trackTitleText}>{displayedTrack.title}</Text>
+          <MovingText
+            text={displayedTrack.title ?? ''}
+            animationThreshold={25}
+            style={styles.trackTitleText}
+          ></MovingText>
           <Text style={styles.trackArtistText}>
-            {displayedTrack.artist ?? 'Unknow Artist'}
+            {displayedTrack.artist ?? 'Unknow artist'}
           </Text>
         </View>
 
@@ -72,7 +80,6 @@ const styles = StyleSheet.create({
     ...defaultStyles.text,
     fontSize: fontSize.base,
     fontWeight: '600',
-    maxWidth: '90%',
   },
   trackArtistText: {
     ...defaultStyles.text,
