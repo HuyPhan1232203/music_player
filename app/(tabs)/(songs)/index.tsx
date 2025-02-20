@@ -5,6 +5,7 @@ import TrackList from '@/components/TrackList'
 import { screenPadding } from '@/constraints/tokens'
 import useNavigationSearch from '@/hooks/useNavigationSearch'
 import lib from '@/assets/data/library.json'
+import { filterTrackTitle } from '@/helper/filterTrackTitle'
 const SongsScreen = () => {
   const search = useNavigationSearch({
     searchBarOption: {
@@ -12,7 +13,7 @@ const SongsScreen = () => {
     },
   })
   const filterSongs = useMemo(() => {
-    if (search == null) return lib
+    if (!search) return lib
     return lib.filter(track =>
       track?.title.toLowerCase().includes(search.toLowerCase()),
     )
